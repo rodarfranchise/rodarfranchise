@@ -94,7 +94,7 @@ export default function About() {
                 <div className="bg-white rounded-2xl p-8 shadow-2xl">
                   <div className="text-center">
                     <img
-                      src="/src/assets/rah.png"
+                      src="/src/assets/Pugazhenthi 002.jpg"
                       alt="PUGAZHENTHI ETHIRAJ - Founder & CEO"
                       className="w-40 h-40 rounded-full mx-auto mb-6 object-cover shadow-lg border-2 border-[#e3ae00]/30"
                     />

@@ -268,6 +268,13 @@ export default function ViewFranchiseModal({ isOpen, onClose, franchise }) {
                     {currentFranchise?.operating_manuals ? 'Yes' : 'No'}
                   </p>
                 </div>
+                <div>
+                  <p className="text-xs text-slate-500">Other</p>
+                  <p className="text-sm font-medium text-slate-900 flex items-center gap-1">
+                    {currentFranchise?.other ? <Check className="h-3 w-3 text-green-500" /> : '-'} 
+                    {currentFranchise?.other ? 'Yes' : 'No'}
+                  </p>
+                </div>
               </div>
             </div>
 

@@ -83,6 +83,7 @@ export default function FranchiseDetail({ franchise }) {
     field_assistance,
     expert_guidance,
     operating_manuals,
+    other,
     contact_phone,
     contact_email,
     contact_address
@@ -578,6 +579,12 @@ export default function FranchiseDetail({ franchise }) {
                       <Users className="h-5 w-5 text-yellow-500" />
                       <span className="text-sm text-slate-600">
                         Expert Guidance: {expert_guidance ? 'Yes' : 'No'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Users className="h-5 w-5 text-yellow-500" />
+                      <span className="text-sm text-slate-600">
+                        Other: {other ? 'Yes' : 'No'}
                       </span>
                     </div>
                   </div>

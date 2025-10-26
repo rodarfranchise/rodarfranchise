@@ -39,6 +39,7 @@ export default function FranchiseFormModal({ isOpen, onClose, onSubmit, initialD
     field_assistance: false,
     expert_guidance: false,
     operating_manuals: false,
+    other: false,
     contact_phone: '',
     contact_email: '',
     contact_address: ''
@@ -448,6 +449,7 @@ export default function FranchiseFormModal({ isOpen, onClose, onSubmit, initialD
       processedData.field_assistance = Boolean(formData.field_assistance);
       processedData.expert_guidance = Boolean(formData.expert_guidance);
       processedData.operating_manuals = Boolean(formData.operating_manuals);
+      processedData.other = Boolean(formData.other);
       
       // Handle arrays with validation
       if (Array.isArray(formData.preferred_locations)) {
@@ -1128,6 +1130,16 @@ export default function FranchiseFormModal({ isOpen, onClose, onSubmit, initialD
                             className="rounded border-slate-300 text-brand-blue-600 focus:ring-brand-blue-500"
                           />
                           <span className="ml-2 text-sm text-slate-700">Operating Manuals</span>
+                        </label>
+                        
+                        <label className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={formData.other}
+                            onChange={(e) => handleInputChange('other', e.target.checked)}
+                            className="rounded border-slate-300 text-brand-blue-600 focus:ring-brand-blue-500"
+                          />
+                          <span className="ml-2 text-sm text-slate-700">Other</span>
                         </label>
                       </div>
                     </div>
