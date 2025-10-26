@@ -71,7 +71,7 @@ export default function About() {
               <div className="bg-white rounded-2xl p-8 shadow-2xl">
                 <div className="text-center">
                   <img
-                    src="/public/client_meet.png"
+                    src="/client_meet.png"
                     alt="Excellence in Franchise Consulting"
                     className="mx-auto mb-10 w-[28rem] h-80 object-cover rounded-3xl shadow-lg border-2 border-[#e3ae00]/30"
                   />
@@ -94,7 +94,7 @@ export default function About() {
                 <div className="bg-white rounded-2xl p-8 shadow-2xl">
                   <div className="text-center">
                     <img
-                      src="/public/Pugazhenthi 002.jpg"
+                      src="/Pugazhenthi 002.jpg"
                       alt="PUGAZHENTHI ETHIRAJ - Founder & CEO"
                       className="w-40 h-40 rounded-full mx-auto mb-6 object-cover shadow-lg border-2 border-[#e3ae00]/30"
                     />
