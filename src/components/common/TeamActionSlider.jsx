@@ -31,8 +31,8 @@ export default function TeamActionSlider() {
   }, []);
 
   useEffect(() => {
-    // Pause auto-advance when modal is open
-    if (!items.length || showModal) return;
+    // Pause auto-advance when modal is open or only one image
+    if (items.length <= 1 || showModal) return;
     timerRef.current = setInterval(() => {
       setSlideDir(1);
       setFadeIn(false);
