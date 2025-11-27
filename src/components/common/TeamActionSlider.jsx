@@ -112,38 +112,44 @@ export default function TeamActionSlider() {
           </div>
         )}
 
-        {/* Navigation buttons */}
-        <button
-          type="button"
-          aria-label="Previous slide"
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/75 hover:bg-white text-slate-800 rounded-full h-9 w-9 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
-          onClick={() => { setSlideDir(-1); goTo((index - 1 + items.length) % items.length); }}
-        >
-          <span className="sr-only">Previous</span>
-          <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M12.7 5.3a1 1 0 010 1.4L9.41 10l3.3 3.3a1 1 0 01-1.42 1.4l-4-4a1 1 0 010-1.4l4-4a1 1 0 011.41 0z"/></svg>
-        </button>
+        {/* Navigation buttons (only if multiple images) */}
+        {items.length > 1 && (
+          <>
+            <button
+              type="button"
+              aria-label="Previous slide"
+              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/75 hover:bg-white text-slate-800 rounded-full h-9 w-9 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+              onClick={() => { if (items.length <= 1) return; setSlideDir(-1); goTo((index - 1 + items.length) % items.length); }}
+            >
+              <span className="sr-only">Previous</span>
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M12.7 5.3a1 1 0 010 1.4L9.41 10l3.3 3.3a1 1 0 01-1.42 1.4l-4-4a1 1 0 010-1.4l4-4a1 1 0 011.41 0z"/></svg>
+            </button>
 
-        <button
-          type="button"
-          aria-label="Next slide"
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/75 hover:bg-white text-slate-800 rounded-full h-9 w-9 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
-          onClick={() => { setSlideDir(1); goTo((index + 1) % items.length); }}
-        >
-          <span className="sr-only">Next</span>
-          <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M7.3 5.3a1 1 0 000 1.4L10.59 10l-3.3 3.3a1 1 0 001.42 1.4l4-4a1 1 0 000-1.4l-4-4a1 1 0 00-1.41 0z"/></svg>
-        </button>
+            <button
+              type="button"
+              aria-label="Next slide"
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/75 hover:bg-white text-slate-800 rounded-full h-9 w-9 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+              onClick={() => { if (items.length <= 1) return; setSlideDir(1); goTo((index + 1) % items.length); }}
+            >
+              <span className="sr-only">Next</span>
+              <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M7.3 5.3a1 1 0 000 1.4L10.59 10l-3.3 3.3a1 1 0 001.42 1.4l4-4a1 1 0 000-1.4l-4-4a1 1 0 00-1.41 0z"/></svg>
+            </button>
+          </>
+        )}
       </div>
 
-      <div className="flex justify-center gap-2 mt-4">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            aria-label={`Slide ${i + 1}`}
-            className={`h-2 w-2 rounded-full ${i === index ? "bg-gray-800" : "bg-gray-300"}`}
-            onClick={() => { setSlideDir(i > index ? 1 : -1); goTo(i); }}
-          />
-        ))}
-      </div>
+      {items.length > 1 && (
+        <div className="flex justify-center gap-2 mt-4">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Slide ${i + 1}`}
+              className={`h-2 w-2 rounded-full ${i === index ? "bg-gray-800" : "bg-gray-300"}`}
+              onClick={() => { if (items.length <= 1) return; setSlideDir(i > index ? 1 : -1); goTo(i); }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Image Modal */}
       {showModal && (
@@ -162,23 +168,27 @@ export default function TeamActionSlider() {
               >
                 <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/></svg>
               </button>
-              {/* Modal navigation buttons */}
-              <button
-                type="button"
-                aria-label="Previous image"
-                className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-slate-800 rounded-full h-10 w-10 flex items-center justify-center shadow focus:outline-none"
-                onClick={(e) => { e.stopPropagation(); setSlideDir(-1); setFadeIn(false); setPrevIndex(index); setIndex((i) => (i - 1 + items.length) % items.length); setTimeout(() => setPrevIndex(null), 520); }}
-              >
-                <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M12.7 5.3a1 1 0 010 1.4L9.41 10l3.3 3.3a1 1 0 01-1.42 1.4l-4-4a1 1 0 010-1.4l4-4a1 1 0 011.41 0z"/></svg>
-              </button>
-              <button
-                type="button"
-                aria-label="Next image"
-                className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-slate-800 rounded-full h-10 w-10 flex items-center justify-center shadow focus:outline-none"
-                onClick={(e) => { e.stopPropagation(); setSlideDir(1); setFadeIn(false); setPrevIndex(index); setIndex((i) => (i + 1) % items.length); setTimeout(() => setPrevIndex(null), 520); }}
-              >
-                <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M7.3 5.3a1 1 0 000 1.4L10.59 10l-3.3 3.3a1 1 0 001.42 1.4l4-4a1 1 0 000-1.4l-4-4a1 1 0 00-1.41 0z"/></svg>
-              </button>
+              {/* Modal navigation buttons (only if multiple images) */}
+              {items.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-slate-800 rounded-full h-10 w-10 flex items-center justify-center shadow focus:outline-none"
+                    onClick={(e) => { if (items.length <= 1) return; e.stopPropagation(); setSlideDir(-1); setFadeIn(false); setPrevIndex(index); setIndex((i) => (i - 1 + items.length) % items.length); setTimeout(() => setPrevIndex(null), 520); }}
+                  >
+                    <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M12.7 5.3a1 1 0 010 1.4L9.41 10l3.3 3.3a1 1 0 01-1.42 1.4l-4-4a1 1 0 010-1.4l4-4a1 1 0 011.41 0z"/></svg>
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-slate-800 rounded-full h-10 w-10 flex items-center justify-center shadow focus:outline-none"
+                    onClick={(e) => { if (items.length <= 1) return; e.stopPropagation(); setSlideDir(1); setFadeIn(false); setPrevIndex(index); setIndex((i) => (i + 1) % items.length); setTimeout(() => setPrevIndex(null), 520); }}
+                  >
+                    <svg viewBox="0 0 20 20" width="18" height="18" fill="currentColor"><path d="M7.3 5.3a1 1 0 000 1.4L10.59 10l-3.3 3.3a1 1 0 001.42 1.4l4-4a1 1 0 000-1.4l-4-4a1 1 0 00-1.41 0z"/></svg>
+                  </button>
+                </>
+              )}
               <img
                 src={imgSrc}
                 alt={current.heading || "Team action"}

@@ -1,4 +1,5 @@
 import TeamActionSlider from "../components/common/TeamActionSlider";
+import { Link } from 'react-router-dom';
 
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
@@ -165,6 +166,14 @@ export default function About() {
               A glimpse of our crew collaborating, presenting, and building together.
             </p>
             <TeamActionSlider />
+            <div className="mt-6 text-center">
+              <Link
+                to="/gallery?from=team"
+                className="inline-flex items-center px-5 py-2 rounded-lg bg-[#e3ae00] text-black font-medium hover:bg-yellow-500 transition-colors shadow"
+              >
+                View all
+              </Link>
+            </div>
           </section>
         )}
 
