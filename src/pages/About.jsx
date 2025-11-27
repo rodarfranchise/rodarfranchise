@@ -1,9 +1,26 @@
+import TeamActionSlider from "../components/common/TeamActionSlider";
 
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer'
 import SketchUnderline from '../components/home/SketchUnderline'
+import { useEffect, useState } from 'react';
+import { fetchTeamActionImages } from '../services/teamActionService';
 
 export default function About() {
+  const [hasTeamImages, setHasTeamImages] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const data = await fetchTeamActionImages();
+        if (active) setHasTeamImages(Array.isArray(data) && data.length > 0);
+      } catch (e) {
+        if (active) setHasTeamImages(false);
+      }
+    })();
+    return () => { active = false };
+  }, []);
   const services = [
     { title: "Franchise Modelling", description: "Comprehensive franchise development and modeling services", img: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" },
     { title: "Financial Projections", description: "Detailed financial analysis and projections for franchise opportunities", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80" },
@@ -29,7 +46,7 @@ export default function About() {
               About Rodar Franchise World
             </h1>
             <div className="flex justify-center">
-              <SketchUnderline width={340} height={16} strokeWidth={6} tilt={-1} className="mb-2" color="#e3ae00" />
+                <SketchUnderline width={340} height={16} strokeWidth={6} tilt={-1} className="mb-6" color="#e3ae00" />
             </div>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto font-sans mt-8">
               Your trusted partner in franchise development and Franchise World
@@ -44,7 +61,7 @@ export default function About() {
               <div>
                 <h2 className="text-4xl font-bold text-slate-800 mb-2 font-sans text-center">Our Company</h2>
                 <div className="flex justify-center">
-                  <SketchUnderline width={270} height={18} strokeWidth={5} tilt={1} className="mb-4" color="#e3ae00" />
+                  <SketchUnderline width={270} height={18} strokeWidth={5} tilt={1} className="mb-6" color="#e3ae00" />
                 </div>
                 <div className="space-y-4 text-slate-700 font-sans bg-white rounded-2xl p-8 shadow-xl">
                   <p className="text-lg">
@@ -112,7 +129,7 @@ export default function About() {
               <div className="order-1 lg:order-2">
                 <h2 className="text-4xl font-bold text-slate-800 mb-2 font-sans text-center">Meet Our Founder</h2>
                 <div className="flex justify-center">
-                  <SketchUnderline width={310} height={18} strokeWidth={5} tilt={-2} className="mb-6" color="#e3ae00" />
+                  <SketchUnderline width={310} height={18} strokeWidth={5} tilt={-2} className="mb-8" color="#e3ae00" />
                 </div>
                 <div className="space-y-4 text-slate-700 font-sans bg-white rounded-2xl p-8 shadow-xl">
                   <p className="text-lg">
@@ -137,6 +154,19 @@ export default function About() {
             </div>
           </div>
         </section>
+
+        {hasTeamImages && (
+          <section className="mt-16">
+            <h2 className="text-4xl font-bold text-slate-800 mb-2 font-sans text-center">Our Team in Action</h2>
+            <div className="flex justify-center">
+              <SketchUnderline width={310} height={18} strokeWidth={5} tilt={-1} className="mb-4" color="#e3ae00" />
+            </div>
+            <p className="text-sm text-gray-600 mb-6 text-center">
+              A glimpse of our crew collaborating, presenting, and building together.
+            </p>
+            <TeamActionSlider />
+          </section>
+        )}
 
         {/* Services Section */}
         <section className="py-20">

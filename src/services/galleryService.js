@@ -274,6 +274,20 @@ export async function reorderGalleryImages(franchiseId, imageIds) {
   }
 }
 
+// Get total gallery images count across all franchises
+export async function getGalleryCount() {
+  try {
+    const { count, error } = await supabase
+      .from('gallery')
+      .select('*', { count: 'exact', head: true })
+    if (error) throw error
+    return count || 0
+  } catch (e) {
+    console.error('Error fetching gallery count:', e)
+    return 0
+  }
+}
+
 export default {
   uploadImage,
   addGalleryImage,
@@ -284,5 +298,6 @@ export default {
   deleteImage,
   deleteImages,
   deleteFranchiseGalleryImages,
-  reorderGalleryImages
+  reorderGalleryImages,
+  getGalleryCount
 }

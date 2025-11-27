@@ -17,6 +17,7 @@ import {
   Mail
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import TeamActionManager from '../components/admin/TeamActionManager'
 import useAuth from '../hooks/useAuth'
 import { supabase } from '../services/supabase'
 import FranchiseFormModal from '../components/admin/FranchiseFormModal'
@@ -55,7 +56,7 @@ export default function AdminDashboard() {
   const [showEditModal, setShowEditModal] = useState(false)
   const [viewContactQuery, setViewContactQuery] = useState(null)
   const [showContactModal, setShowContactModal] = useState(false)
-  const [activeTab, setActiveTab] = useState('franchises') // 'franchises' or 'contacts'
+  const [activeTab, setActiveTab] = useState('franchises') // 'franchises' | 'contacts' | 'team'
   const [notification, setNotification] = useState(null) // { type: 'success'|'error', message: string }
 
   // Auto-dismiss notifications after 5 seconds
@@ -513,29 +514,41 @@ export default function AdminDashboard() {
               >
                 Contact Queries
               </button>
+              <button
+                onClick={() => setActiveTab('team')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'team'
+                    ? 'border-brand-blue-500 text-brand-blue-600'
+                    : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+                }`}
+              >
+                Gallery
+              </button>
             </nav>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {(activeTab === 'franchises' ? franchiseStats : contactStatsCards).map((stat, index) => {
-            const Icon = stat.icon
-            return (
-              <div key={index} className="bg-white rounded-lg shadow-md border border-orange-200 p-6">
-                <div className="flex items-center">
-                  <div className={`p-2 rounded-lg bg-orange-50 ${stat.color.replace('text-blue-600','text-orange-600')}`}>
-                    <Icon className="h-6 w-6" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-slate-700">{stat.label}</p>
-                    <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
+        {(activeTab === 'franchises' || activeTab === 'contacts') && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {(activeTab === 'franchises' ? franchiseStats : contactStatsCards).map((stat, index) => {
+              const Icon = stat.icon
+              return (
+                <div key={index} className="bg-white rounded-lg shadow-md border border-orange-200 p-6">
+                  <div className="flex items-center">
+                    <div className={`p-2 rounded-lg bg-orange-50 ${stat.color.replace('text-blue-600','text-orange-600')}`}>
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <div className="ml-4">
+                      <p className="text-sm font-medium text-slate-700">{stat.label}</p>
+                      <p className="text-2xl font-bold text-slate-900">{stat.value}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        )}
 
         {/* Actions Bar */}
         {activeTab === 'franchises' && (
@@ -788,6 +801,13 @@ export default function AdminDashboard() {
               <p className="text-slate-500">No franchises found matching your criteria.</p>
             </div>
           )}
+          </div>
+        )}
+
+        {/* Our Team in Action Manager */}
+        {activeTab === 'team' && (
+          <div className="bg-white rounded-lg shadow-md border border-orange-200 p-6">
+            <TeamActionManager />
           </div>
         )}
 
